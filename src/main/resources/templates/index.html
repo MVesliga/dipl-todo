@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head"></head>
+<body>
+<div class="container">
+    <!--<div class="d-flex justify-content-center" th:style="'margin-top: 5%;'">
+        <div class="col-md-8 box-bored-style">
+            <div class="text-center">
+                <h1 align="center" th:text="#{welcome.msg}"></h1>
+                <p th:text="#{loveMe.description}"></p>
+                <a th:href="@{/prijava}" th:text="#{btn.login}" class="btn btn-outline-info">Login</a>
+                <hr />
+                <p><span th:text="#{msg.register}"></span> <a th:href="@{/registracija}" th:text="#{label.register}"></a></p>
+            </div>
+        </div>
+    </div>-->
+    <h1>Hello friend! Welcome to the TODO app! :)</h1>
+</div>
+
+</body>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#locales").change(function () {
+            var selectedOption = $('#locales').val();
+            if (selectedOption != '') {
+                window.location.replace(window.location.origin + '?lang=' + selectedOption);
+            }
+        });
+    });
+</script>
+</html>

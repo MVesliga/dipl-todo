@@ -1,0 +1,53 @@
+<!doctype html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/security/tags">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand"
+       th:href="@{/todo/home}"><span>TODO</span></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link"
+                   th:href="@{/todo/home}"><img height="30px">
+                    <span>Home</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/todo/todo-list}"><img height="30px">
+                    <span>Todo List</span></a>
+            </li>
+        </ul>
+
+        <div sec:authorize="isAuthenticated()">
+            <div style="padding: 2px;" class="border-left border-right">
+                <span></span> <span sec:authentication="name" style="font-weight: bold;"></span>
+            </div>
+        </div>
+        <div class="nav-item" sec:authorize="isAuthenticated()">
+            <a th:href="@{/logout}" class="btn btn-danger" style="margin-left: 5px;">Logout</a>
+        </div>
+    </div>
+</nav>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".radio-nav").on('click', function (event) {
+            var selectedOption = $(this).val();
+            localStorage.setItem('locale', selectedOption);
+            var currentUrl = new URL(window.location.href);
+            currentUrl.searchParams.set("lang", selectedOption);
+            window.location.replace(currentUrl);
+        });
+
+        var localeValue = localStorage.getItem('locale');
+        if ("en" == localeValue) {
+            document.getElementById("enRadio").checked = true;
+        } else if ("hr" == localeValue) {
+            document.getElementById("hrRadio").checked = true;
+        }
+    })
+</script>
+</html>
