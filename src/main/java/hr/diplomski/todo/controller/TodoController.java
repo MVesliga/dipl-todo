@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/todo")
 public class TodoController {
 
-    @GetMapping
+    @GetMapping("/home")
     public String getTodoIndexPage() {
         return "todoIndex";
     }

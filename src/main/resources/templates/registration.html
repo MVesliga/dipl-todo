@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head"></head>
+<div class="container">
+    <div class="d-flex justify-content-center" th:style="'margin-top: 5%;'">
+        <div class="col-md-8 box-bored-style">
+            <h1 th:text="#{label.register}">Registracija</h1>
+            <form th:action="@{/register}" th:object="${registerForm}" method="POST">
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="firstName" th:text="#{registerForm.firstName}">Ime</label>
+                        <input type="text" class="form-control" id="firstName" th:field="*{firstName}">
+                        <div class="invalid-message"
+                             th:if="${#fields.hasErrors('firstName')}"
+                             th:errors="*{firstName}">Ime error</div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="lastName" th:text="#{registerForm.lastName}">Prezime</label>
+                        <input type="text" class="form-control" id="lastName" th:field="*{lastName}">
+                        <div class="invalid-message"
+                             th:if="${#fields.hasErrors('lastName')}"
+                             th:errors="*{lastName}">Prezime error</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="username" th:text="#{registerForm.username}">Korisničko ime</label>
+                    <input type="text" class="form-control" id="username" th:field="*{username}">
+                    <div class="invalid-message"
+                         th:if="${#fields.hasErrors('username')}"
+                         th:errors="*{username}">Korisnicko ime error</div>
+                </div>
+                <div class="form-group">
+                    <label for="email" th:text="#{registerForm.email}">Email</label>
+                    <input type="email" class="form-control" id="email" th:field="*{email}">
+                    <div class="invalid-message"
+                         th:if="${#fields.hasErrors('email')}"
+                         th:errors="*{email}">Email error</div>
+                </div>
+                <div class="form-group">
+                    <label for="password" th:text="#{registerForm.password}">Lozinka</label>
+                    <input type="password" class="form-control" id="password" th:field="*{password}">
+                    <div class="invalid-message"
+                         th:if="${#fields.hasErrors('password')}"
+                         th:errors="*{password}">Lozinka error</div>
+                </div>
+                <div class="form-group">
+                    <label for="repeatedPassword" th:text="#{registerForm.repeatedPassword}">Potvrdite lozinku</label>
+                    <input type="password" class="form-control" id="repeatedPassword" th:field="*{repeatedPassword}">
+                    <div class="invalid-message"
+                         th:if="${#fields.hasErrors('repeatedPassword')}"
+                         th:errors="*{repeatedPassword}">Ponovljena lozinka error</div>
+                </div>
+                <a class="btn btn-outline-info" th:text="#{label.back}" th:href="@{/}"></a>
+                <button type="submit" class="btn btn-outline-info float-right" th:text="#{label.submit}"></button>
+            </form>
+            <br />
+            <hr />
+            <p class="text-center"><span th:text="#{msg.login}"></span> <a th:href="@{/login}" th:text="#{label.login}"></a></p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

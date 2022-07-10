@@ -2,7 +2,7 @@
 <html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/security/tags">
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand"
-       th:href="@{/todo/home}"><span>TODO</span></a>
+       th:href="@{/todo/home}"><span th:text="#{nav.home}">Pocetna</span></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -10,24 +10,35 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link"
-                   th:href="@{/todo/home}"><img height="30px">
-                    <span>Home</span></a>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/todo/list}"><span th:text="#{nav.todo.list}">Todo lista</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/todo/todo-list}"><img height="30px">
-                    <span>Todo List</span></a>
+                <a class="nav-link" th:href="@{/user/profile}"><span th:text="#{nav.profile}">Profil</span></a>
+            </li>
+            <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
+                <a class="nav-link" th:href="@{/user/list}"><span th:text="#{nav.korisnici}">Korisnici</span></a>
             </li>
         </ul>
 
+        <div class="form-check form-check-inline border-right">
+            <input class="form-check-input radio-nav" id="hrRadio" name="radio"
+                   value="hr" type="radio">
+            <label class="form-check-label mr-2" for="hrRadio">Hr</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input type="radio" class="form-check-input radio-nav" name="radio"
+                   id="enRadio" value="en">
+            <label class="form-check-label " for="enRadio">En</label>
+        </div>
+
         <div sec:authorize="isAuthenticated()">
             <div style="padding: 2px;" class="border-left border-right">
-                <span></span> <span sec:authentication="name" style="font-weight: bold;"></span>
+                <span th:text="#{nav.loggedInAs}"></span> <span sec:authentication="name" style="font-weight: bold;"></span>
             </div>
         </div>
         <div class="nav-item" sec:authorize="isAuthenticated()">
-            <a th:href="@{/logout}" class="btn btn-danger" style="margin-left: 5px;">Logout</a>
+            <a th:href="@{/logout}" class="btn btn-danger" th:text="#{nav.logout}" style="margin-left: 5px;">Odjava</a>
         </div>
     </div>
 </nav>
