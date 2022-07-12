@@ -1,0 +1,18 @@
+CREATE TABLE IF NOT EXISTS hr_user (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  firstName VARCHAR(45) NOT NULL,
+  lastName VARCHAR(45) NOT NULL,
+  email VARCHAR(45) NOT NULL,
+  username VARCHAR(45) UNIQUE NULL,
+  password VARCHAR(255) NULL,
+  enabled TINYINT NOT NULL DEFAULT 1
+  );
+
+CREATE TABLE IF NOT EXISTS user_role (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  username varchar(45) NOT NULL,
+  role VARCHAR(45) NOT NULL,
+  FOREIGN KEY (username) REFERENCES hr_user (username)
+);
+
+

@@ -27,15 +27,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
+        /*auth.inMemoryAuthentication()
                 .withUser("user").password(passwordEncoder().encode("userpass")).roles("USER")
                 .and()
-                .withUser("admin").password(passwordEncoder().encode("adminpass")).roles("ADMIN");
-       /* auth.jdbcAuthentication()
+                .withUser("admin").password(passwordEncoder().encode("adminpass")).roles("ADMIN");*/
+        auth.jdbcAuthentication()
                 .dataSource(dataSource)
-                .usersByUsernameQuery("select korisnicko_ime, lozinka, enabled from korisnik where korisnicko_ime=?")
-                .authoritiesByUsernameQuery("select korisnicko_ime, uloga as role from korisnik_uloga where korisnicko_ime=?")
-                .passwordEncoder(new BCryptPasswordEncoder(12));*/
+                .usersByUsernameQuery("select username, password, enabled from hr_User where username=?")
+                .authoritiesByUsernameQuery("select username, role from hr_User_role where username=?")
+                .passwordEncoder(new BCryptPasswordEncoder(12));
     }
 
     @Override

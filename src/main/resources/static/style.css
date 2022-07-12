@@ -1,0 +1,21 @@
+.box-bored-style{
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0px 0px 8px gray;
+}
+
+#profilna {
+    display: block;
+    margin: 0 auto;
+    padding-top: 20px;
+    padding-bottom: 15px;
+    min-width: 50px;
+}
+
+.navbar-custom {
+    background-color: #FFF4ED;
+}
+
+.invalid-message{
+    color: red;
+}

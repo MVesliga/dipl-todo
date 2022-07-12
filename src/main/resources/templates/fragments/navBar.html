@@ -14,10 +14,10 @@
                 <a class="nav-link" th:href="@{/todo/list}"><span th:text="#{nav.todo.list}">Todo lista</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/user/profile}"><span th:text="#{nav.profile}">Profil</span></a>
+                <a class="nav-link" th:href="@{/hrUser/profile}"><span th:text="#{nav.profile}">Profil</span></a>
             </li>
             <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
-                <a class="nav-link" th:href="@{/user/list}"><span th:text="#{nav.korisnici}">Korisnici</span></a>
+                <a class="nav-link" th:href="@{/hrUser/list}"><span th:text="#{nav.korisnici}">Korisnici</span></a>
             </li>
         </ul>
 
