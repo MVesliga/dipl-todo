@@ -5,17 +5,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/todo")
-public class TodoController {
+@RequestMapping("/user")
+public class UserController {
 
-    @GetMapping("/home")
-    public String getTodoIndexPage() {
-        return "todoIndex";
+    @GetMapping("/my-profile")
+    public String getMyUserProfilePage() {
+        return "myUserProfile";
     }
 
     @GetMapping("/list")
-    public String getTodoList() {
-
-        return "todoList";
+    public String getUserList() {
+        return "userList";
     }
 }

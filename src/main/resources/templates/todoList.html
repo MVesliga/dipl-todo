@@ -1,0 +1,52 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<head th:replace="fragments/head"></head>
+<body>
+<nav th:replace="fragments/navBar"></nav>
+<div class="container">
+    <button class="btn btn-primary mt-4">Add TODO</button>
+    <div class="mt-4">
+        <h2>List of TODOs</h2>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th scope="col">Description</th>
+                <th scope="col">Date of creation</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row">First TODO</th>
+                <td>13.7.2022.</td>
+                <td>
+                    <button class="btn btn-secondary">Edit</button>
+                    <button class="btn btn-danger">Delete</button>
+                </td>
+
+            </tr>
+            <tr>
+                <th scope="row">Second TODO</th>
+                <td>13.7.2022.</td>
+                <td>
+                    <button class="btn btn-secondary">Edit</button>
+                    <button class="btn btn-danger">Delete</button>
+                </td>
+
+            </tr>
+            <tr>
+                <th scope="row">Third TODO</th>
+                <td>13.7.2022.</td>
+                <td>
+                    <button class="btn btn-secondary">Edit</button>
+                    <button class="btn btn-danger">Delete</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

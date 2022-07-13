@@ -33,8 +33,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .withUser("admin").password(passwordEncoder().encode("adminpass")).roles("ADMIN");*/
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
-                .usersByUsernameQuery("select username, password, enabled from hr_User where username=?")
-                .authoritiesByUsernameQuery("select username, role from hr_User_role where username=?")
+                .usersByUsernameQuery("select username, password, enabled from hr_user where username=?")
+                .authoritiesByUsernameQuery("select username, role from user_role where username=?")
                 .passwordEncoder(new BCryptPasswordEncoder(12));
     }
 
