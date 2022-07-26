@@ -1,43 +1,27 @@
 package hr.diplomski.todo.domain;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
+@Table(name = "todo")
 public class TodoItem {
     @Id
     @GeneratedValue
     private Integer id;
-    private Integer userId;
-    private String title;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private HrUser user;
+    private String description;
+    @Column(name = "creation_date")
+    private Timestamp creationDate;
     private boolean completed;
-
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        TodoItem todoItem = (TodoItem) o;
-        return completed == todoItem.completed
-                && Objects.equals(id, todoItem.id)
-                && Objects.equals(userId, todoItem.userId)
-                && Objects.equals(title, todoItem.title);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, userId, title, completed);
-    }
 }

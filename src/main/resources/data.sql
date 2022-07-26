@@ -11,3 +11,7 @@ INSERT INTO user_role (username, role) VALUES ('pero', 'ROLE_USER');
 INSERT INTO user_role (username, role) VALUES ('admin', 'ROLE_USER');
 INSERT INTO user_role (username, role) VALUES ('admin', 'ROLE_ADMIN');
 INSERT INTO user_role (username, role) VALUES ('hrUser', 'ROLE_USER');
+
+INSERT INTO todo (user_id, description, creation_date) VALUES (1, 'First TODO', '2022-07-23 00:00:00.000');
+INSERT INTO todo (user_id, description, creation_date) VALUES (1, 'Second TODO', '2022-07-23 12:00:00.000');
+INSERT INTO todo (user_id, description, creation_date) VALUES (1, 'Third TODO', '2022-07-23 12:02:00.000');

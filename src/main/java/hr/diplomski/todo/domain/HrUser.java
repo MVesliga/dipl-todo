@@ -3,6 +3,7 @@ package hr.diplomski.todo.domain;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -16,9 +17,9 @@ public class HrUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column
+    @Column(name = "first_name")
     private String firstName;
-    @Column
+    @Column(name = "last_name")
     private String lastName;
     @Column
     private String username;
@@ -26,4 +27,6 @@ public class HrUser {
     private String email;
     @Column
     private String password;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    List<TodoItem> todoList;
 }

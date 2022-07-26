@@ -15,4 +15,13 @@ CREATE TABLE IF NOT EXISTS user_role (
   FOREIGN KEY (username) REFERENCES hr_user (username)
 );
 
+CREATE TABLE IF NOT EXISTS todo (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  description VARCHAR(255) NOT NULL,
+  creation_date TIMESTAMP NOT NULL,
+  completed TINYINT NOT NULL DEFAULT 0,
+  FOREIGN KEY (user_id) REFERENCES hr_user (id)
+);
+
 
