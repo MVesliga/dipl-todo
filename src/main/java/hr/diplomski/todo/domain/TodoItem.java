@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -15,13 +16,13 @@ import java.util.Objects;
 @Table(name = "todo")
 public class TodoItem {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private HrUser user;
     private String description;
     @Column(name = "creation_date")
-    private Timestamp creationDate;
+    private LocalDateTime creationDate;
     private boolean completed;
 }

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Getter
@@ -17,6 +18,5 @@ public class TodoItemForm {
     private Integer id;
     private HrUser user;
     private String description;
-    private Timestamp creationDate;
     private boolean completed;
 }

@@ -1,0 +1,25 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<head th:replace="fragments/head"></head>
+<body>
+<nav th:replace="fragments/navBar"></nav>
+<div class="container">
+    <div class="d-flex justify-content-center" th:style="'margin-top: 5%;'">
+        <div class="col-md-8 box-bored-style">
+            <form  th:action="@{/todo/create}" th:object="${todoItemForm}" method="POST">
+                <div class="mb-3">
+                    <label for="description" class="form-label" th:text="#{todoItemForm.description}"></label>
+                    <input type="text" class="form-control" id="description" name="description" th:field="*{description}">
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <p th:text="#{label.submit}" style="display: inline;"></p>
+                </button>
+                <a class="btn btn-danger float-right" th:href="@{/todo/list}" th:text="#{label.back}"></a>  
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
