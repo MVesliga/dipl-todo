@@ -10,10 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -75,6 +72,15 @@ public class TodoController {
         todoItemFacade.create(todoItemForm);
 
         redirectAttributes.addFlashAttribute("createTodoItemSuccess", true);
+        return "redirect:/todo/list";
+    }
+
+    @GetMapping("/delete")
+    public String deleteLjubimac(@RequestParam("id") Integer id,
+                                 RedirectAttributes redirectAttributes){
+        todoItemFacade.getTodoItemRepository().deleteById(id);
+
+        redirectAttributes.addFlashAttribute("deleteTodoItemSuccess", true);
         return "redirect:/todo/list";
     }
 }

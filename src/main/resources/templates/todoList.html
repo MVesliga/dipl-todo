@@ -6,7 +6,24 @@
 <body>
 <nav th:replace="fragments/navBar"></nav>
 <div class="container">
-    <!--<button class="btn btn-primary mt-4" th:href="@{/todo/create}">Add TODO</button>-->
+    <div th:if="${deleteTodoItemSuccess}" class="alert alert-info alert-dismissible fade show" role="alert">
+        <p class="text-center" th:text="#{todoItem.deleteTodoItemSuccess}">TODO uspjesno obrisan!</p>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div th:if="${updateTodoItemSuccess}" class="alert alert-info alert-dismissible fade show" role="alert">
+        <p class="text-center" th:text="#{todoItem.updateTodoItemSuccess}">TODO uspjesno ažuriran!</p>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div th:if="${createTodoItemSuccess}" class="alert alert-info alert-dismissible fade show" role="alert">
+        <p class="text-center" th:text="#{todoItem.createTodoItemSuccess}">TODO uspjesno kreiran!</p>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
     <a class="btn btn-primary mt-4" th:href="@{/todo/create}">Add TODO</a>
     <div class="mt-4">
         <h2>List of TODOs</h2>
@@ -28,7 +45,7 @@
                 <td><span th:text="${#temporals.format(todoItem.creationDate, 'dd.MM.yyyy HH:mm')}"></span></td>
                 <td>
                     <button class="btn btn-secondary">Edit</button>
-                    <button class="btn btn-danger">Delete</button>
+                    <a class="btn btn-danger" style="padding: 4.6%" th:href="@{/todo/delete/(id=${todoItem.id})}" th:text="#{label.delete}"></a>
                 </td>
             </tr>
             </tbody>
