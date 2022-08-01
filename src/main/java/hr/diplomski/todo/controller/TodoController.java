@@ -1,5 +1,6 @@
 package hr.diplomski.todo.controller;
 
+import hr.diplomski.todo.converter.TodoItemConverter;
 import hr.diplomski.todo.domain.CustomUserDetails;
 import hr.diplomski.todo.domain.HrUser;
 import hr.diplomski.todo.domain.TodoItem;
@@ -23,11 +24,14 @@ public class TodoController {
 
     private UserFacade userFacade;
     private TodoItemFacade todoItemFacade;
+    private TodoItemConverter todoItemConverter;
 
     public TodoController(final UserFacade userFacade,
-                          final TodoItemFacade todoItemFacade) {
+                          final TodoItemFacade todoItemFacade,
+                          final TodoItemConverter todoItemConverter) {
         this.userFacade = userFacade;
         this.todoItemFacade = todoItemFacade;
+        this.todoItemConverter = todoItemConverter;
     }
 
     @GetMapping("/home")
@@ -72,6 +76,40 @@ public class TodoController {
         todoItemFacade.create(todoItemForm);
 
         redirectAttributes.addFlashAttribute("createTodoItemSuccess", true);
+        return "redirect:/todo/list";
+    }
+
+    @GetMapping("/edit")
+    public String getEditForm(@RequestParam(value = "id")Integer id, Model model){
+
+        if (!model.containsAttribute("updateTodoItemForm")) {
+            TodoItem todoItem = todoItemFacade.getTodoItemRepository().findById(id).get();
+            TodoItemForm updateTodoItemForm = todoItemConverter.convertToForm(todoItem);
+            model.addAttribute("updateTodoItemForm", updateTodoItemForm);
+        }
+
+        model.addAttribute("updateTodoItemForm", model.getAttribute("updateTodoItemForm"));
+
+        return "updateTodoItem";
+    }
+
+    @PostMapping("/edit")
+    public String postEditForm(@ModelAttribute @Valid TodoItemForm updateTodoItemForm,
+                               BindingResult bindingResult,
+                               RedirectAttributes redirectAttributes) {
+
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.updateTodoItemForm", bindingResult);
+            redirectAttributes.addFlashAttribute("updateTodoItemForm", updateTodoItemForm);
+
+            return "redirect:/todo/edit";
+        }
+        TodoItem todoItem = todoItemFacade.getTodoItemRepository().findById(updateTodoItemForm.getId()).get();
+
+        TodoItem editedTodoItem = todoItemConverter.convert(updateTodoItemForm);
+        todoItemFacade.getTodoItemRepository().save(editedTodoItem);
+
+        redirectAttributes.addFlashAttribute("updateTodoItemSuccess", true);
         return "redirect:/todo/list";
     }
 

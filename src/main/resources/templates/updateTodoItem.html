@@ -8,7 +8,9 @@
 <div class="container">
     <div class="d-flex justify-content-center" th:style="'margin-top: 5%;'">
         <div class="col-md-8 box-bored-style">
-            <form  th:action="@{/todo/create}" th:object="${todoItemForm}" method="POST">
+            <form  th:action="@{/todo/edit}" th:object="${updateTodoItemForm}" method="POST">
+                <input type="hidden" name="id" th:field="*{id}">
+                <input type="hidden" name="user" th:field="*{user}">
                 <div class="mb-3">
                     <label for="description" class="form-label" th:text="#{todoItemForm.description}"></label>
                     <input type="text" class="form-control" id="description" name="description" th:field="*{description}">

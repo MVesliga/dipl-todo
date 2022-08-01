@@ -32,12 +32,26 @@ public class IndexController {
     }
 
     @GetMapping("/login")
-    public String getLoginForm(Model model){
+    public String getLoginForm(Model model) {
         if (!model.containsAttribute("loginForm")) {
             model.addAttribute("loginForm", new LoginForm());
         }
         return "login";
     }
+
+    @PostMapping("/login")
+    public String postLoginForm(@ModelAttribute @Valid LoginForm loginForm,
+                                BindingResult bindingResult,
+                                RedirectAttributes redirectAttributes) {
+     if (bindingResult.hasErrors()) {
+         redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.loginForm", bindingResult);
+         redirectAttributes.addFlashAttribute("loginForm", loginForm);
+
+         return "redirect:/login";
+     }
+
+     return "todoIndex";
+ }
 
     @GetMapping("/register")
     public String getRegisterForm(Model model) {

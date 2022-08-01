@@ -13,6 +13,9 @@ public class TodoItemConverter implements Converter<TodoItemForm, TodoItem> {
     @Override
     public TodoItem convert(final TodoItemForm source) {
         TodoItem todoItem = new TodoItem();
+        if (source.getId() != null) {
+            todoItem.setId(source.getId());
+        }
         todoItem.setDescription(source.getDescription());
         todoItem.setCreationDate(LocalDateTime.now());
         todoItem.setCompleted(source.isCompleted());
@@ -23,6 +26,7 @@ public class TodoItemConverter implements Converter<TodoItemForm, TodoItem> {
     public TodoItemForm convertToForm(final TodoItem todoItem) {
         TodoItemForm todoItemForm = new TodoItemForm();
         todoItemForm.setId(todoItem.getId());
+        todoItemForm.setUser(todoItem.getUser());
         todoItemForm.setDescription(todoItem.getDescription());
         todoItemForm.setCompleted(todoItem.isCompleted());
 

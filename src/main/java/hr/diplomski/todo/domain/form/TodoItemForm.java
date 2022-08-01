@@ -6,9 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.Objects;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -17,6 +15,7 @@ import java.util.Objects;
 public class TodoItemForm {
     private Integer id;
     private HrUser user;
+    @NotNull
     private String description;
     private boolean completed;
 }

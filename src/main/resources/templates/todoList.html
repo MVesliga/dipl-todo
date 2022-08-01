@@ -24,15 +24,15 @@
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
-    <a class="btn btn-primary mt-4" th:href="@{/todo/create}">Add TODO</a>
+    <a class="btn btn-primary mt-4" th:href="@{/todo/create}" th:text="#{label.add}">Add TODO</a>
     <div class="mt-4">
         <h2>List of TODOs</h2>
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th scope="col">Description</th>
-                <th scope="col">Date of creation</th>
-                <th scope="col">Actions</th>
+                <th scope="col" th:text="#{label.description}">Description</th>
+                <th scope="col" th:text="#{label.creationDate}">Date of creation</th>
+                <th scope="col" th:text="#{label.actions}">Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -41,11 +41,10 @@
             </tr>
             <tr th:each="todoItem : ${todoList}">
                 <td><span th:text="${todoItem.description}"> Description </span></td>
-                <!--<td><span th:text="${todoItem.creationDate}"> Creation Date </span></td>-->
                 <td><span th:text="${#temporals.format(todoItem.creationDate, 'dd.MM.yyyy HH:mm')}"></span></td>
                 <td>
-                    <button class="btn btn-secondary">Edit</button>
-                    <a class="btn btn-danger" style="padding: 4.6%" th:href="@{/todo/delete/(id=${todoItem.id})}" th:text="#{label.delete}"></a>
+                    <a class="btn btn-secondary" th:href="@{/todo/edit/(id=${todoItem.id})}" th:text="#{label.edit}"></a>
+                    <a class="btn btn-danger" th:href="@{/todo/delete/(id=${todoItem.id})}" th:text="#{label.delete}"></a>
                 </td>
             </tr>
             </tbody>
