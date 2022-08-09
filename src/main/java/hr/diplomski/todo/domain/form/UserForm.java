@@ -1,14 +1,19 @@
 package hr.diplomski.todo.domain.form;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
-public class RegisterForm {
+@NoArgsConstructor
+@EqualsAndHashCode
+public class UserForm {
     private Integer id;
     @NotBlank(message = "{registerForm.firstName.notBlank}")
     private String firstName;
@@ -19,8 +24,7 @@ public class RegisterForm {
     @NotBlank(message = "{registerForm.email.notBlank}")
     @Email(message = "{registerForm.email.format}")
     private String email;
-    @NotBlank(message = "{registerForm.password.notBlank}")
+    @NotNull
     private String password;
-    @NotBlank(message = "{registerForm.repeatedPassword.notBlank}")
-    private String repeatedPassword;
+    private boolean enabled;
 }

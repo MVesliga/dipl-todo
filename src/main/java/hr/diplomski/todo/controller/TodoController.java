@@ -104,7 +104,6 @@ public class TodoController {
 
             return "redirect:/todo/edit";
         }
-        TodoItem todoItem = todoItemFacade.getTodoItemRepository().findById(updateTodoItemForm.getId()).get();
 
         TodoItem editedTodoItem = todoItemConverter.convert(updateTodoItemForm);
         todoItemFacade.getTodoItemRepository().save(editedTodoItem);
@@ -114,7 +113,7 @@ public class TodoController {
     }
 
     @GetMapping("/delete")
-    public String deleteLjubimac(@RequestParam("id") Integer id,
+    public String deleteTodoItem(@RequestParam("id") Integer id,
                                  RedirectAttributes redirectAttributes){
         todoItemFacade.getTodoItemRepository().deleteById(id);
 

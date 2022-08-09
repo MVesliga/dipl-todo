@@ -1,0 +1,60 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<head th:replace="fragments/head"></head>
+<body>
+<nav th:replace="fragments/navBar"></nav>
+<div class="container">
+    <div class="d-flex justify-content-center" th:style="'margin-top: 5%;'">
+        <div class="col-md-8 box-bored-style">
+            <form  th:action="@{/user/edit}" th:object="${updateUserForm}" method="POST">
+                <input type="hidden" name="id" th:field="*{id}">
+                <input type="hidden" name="password" th:field="*{password}">
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="firstName" th:text="#{registerForm.firstName}">Ime</label>
+                        <input type="text" class="form-control" id="firstName" th:field="*{firstName}">
+                        <div class="invalid-message"
+                             th:if="${#fields.hasErrors('firstName')}"
+                             th:errors="*{firstName}">Ime error</div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="lastName" th:text="#{registerForm.lastName}">Prezime</label>
+                        <input type="text" class="form-control" id="lastName" th:field="*{lastName}">
+                        <div class="invalid-message"
+                             th:if="${#fields.hasErrors('lastName')}"
+                             th:errors="*{lastName}">Prezime error</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="username" th:text="#{registerForm.username}">Korisničko ime</label>
+                    <input type="text" class="form-control" id="username" th:field="*{username}">
+                    <div class="invalid-message"
+                         th:if="${#fields.hasErrors('username')}"
+                         th:errors="*{username}">Korisnicko ime error</div>
+                </div>
+                <div class="form-group">
+                    <label for="email" th:text="#{registerForm.email}">Email</label>
+                    <input type="email" class="form-control" id="email" th:field="*{email}">
+                    <div class="invalid-message"
+                         th:if="${#fields.hasErrors('email')}"
+                         th:errors="*{email}">Email error</div>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" th:field="*{enabled}" id="userEnabled" th:checked="*{enabled}">
+                    <label class="form-check-label" for="userEnabled" th:text="#{updateUserForm.enabled}">
+                        Enabled
+                    </label>
+                </div>
+                <br />
+                <a class="btn btn-danger" th:href="@{/todo/list}" th:text="#{label.back}"></a>
+                <button type="submit" class="btn btn-primary float-right">
+                    <p th:text="#{label.submit}" style="display: inline;"></p>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

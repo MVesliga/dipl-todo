@@ -27,6 +27,8 @@ public class HrUser {
     private String email;
     @Column
     private String password;
+    @Column
+    private boolean enabled;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     List<TodoItem> todoList;
 }
