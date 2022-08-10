@@ -38,10 +38,10 @@ public class UserController {
         return "myUserProfile";
     }
 
-    @GetMapping("/{id}")
-    public String getMyUserProfilePage(@PathVariable("id") Integer id,
+    @GetMapping("/profile/{id}")
+    public String getMyUserProfilePage(@PathVariable("id") String id,
                                        final Model model) {
-        HrUser user = userFacade.getUserRepository().findById(id).get();
+        HrUser user = userFacade.getUserRepository().findById(Integer.valueOf(id)).get();
         model.addAttribute("user", user);
 
         return "userProfile";

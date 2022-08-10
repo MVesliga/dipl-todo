@@ -6,7 +6,11 @@
 <body>
 <nav th:replace="fragments/navBar"></nav>
 <div class="container">
-    <h1>TODO index page!</h1>
+    <div class="d-flex justify-content-center" th:style="'margin-top: 5%;'">
+        <div class="col-md-8">
+            <h1 th:text="#{todo.landing.message}">TODO index page</h1>
+        </div>
+    </div>
 </div>
 </body>
 </html>

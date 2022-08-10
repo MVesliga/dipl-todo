@@ -46,6 +46,7 @@
                 <td><span th:text="${user.username}"> Username </span></td>
                 <td><span th:text="${user.email}"> Email </span></td>
                 <td>
+                    <a class="btn btn-primary" th:href="@{'/user/profile/' + ${user.id}}" th:text="#{label.details}"></a>
                     <a class="btn btn-secondary" th:href="@{/user/edit/(id=${user.id})}" th:text="#{label.edit}"></a>
                     <a class="btn btn-danger" th:href="@{/user/delete/(id=${user.id})}" th:text="#{label.delete}"></a>
                 </td>
