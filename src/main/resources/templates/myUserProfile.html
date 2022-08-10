@@ -6,7 +6,24 @@
 <body>
 <nav th:replace="fragments/navBar"></nav>
 <div class="container">
-    <h1>My user profile page!</h1>
+    <div class="d-flex justify-content-center" th:style="'margin-top: 5%;'">
+        <div class="col-md-8 box-bored-style">
+            <h1 th:text="#{profile.details.title}">Detalji naslov</h1>
+            <hr />
+            <span class="row ml-1">
+                <span style="font-weight: bold" th:text="#{label.firstName}"></span>:&nbsp; <span th:text="${user.firstName}"></span>
+            </span>
+            <span class="row ml-1">
+                <span style="font-weight: bold" th:text="#{label.lastName}"></span>:&nbsp; <span th:text="${user.lastName}"></span>
+            </span>
+            <span class="row ml-1">
+                <span style="font-weight: bold" th:text="#{label.username}"></span>:&nbsp; <span th:text="${user.username}"></span>
+            </span>
+            <span class="row ml-1">
+                <span style="font-weight: bold" th:text="#{label.email}"></span>:&nbsp; <span th:text="${user.email}"></span>
+            </span>
+        </div>
+    </div>
 </div>
 </body>
 </html>

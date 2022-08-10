@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -29,15 +30,28 @@ public class UserController {
     }
 
     @GetMapping("/my-profile")
-    public String getMyUserProfilePage() {
+    public String getMyUserProfilePage(final Principal principal,
+                                       final Model model) {
+        HrUser user = userFacade.getUserRepository().findByUsername(principal.getName());
+        model.addAttribute("user", user);
+
         return "myUserProfile";
+    }
+
+    @GetMapping("/{id}")
+    public String getMyUserProfilePage(@PathVariable("id") Integer id,
+                                       final Model model) {
+        HrUser user = userFacade.getUserRepository().findById(id).get();
+        model.addAttribute("user", user);
+
+        return "userProfile";
     }
 
     @GetMapping("/list")
     public String getUserList(final Model model) {
         List<HrUser> userList = userFacade.getUserRepository().findAll();
-
         model.addAttribute("userList", userList);
+
         return "userList";
     }
 
@@ -49,7 +63,6 @@ public class UserController {
             UserForm updateUserForm = userConverter.convertToForm(user);
             model.addAttribute("updateUserForm", updateUserForm);
         }
-
         model.addAttribute("updateUserForm", model.getAttribute("updateUserForm"));
 
         return "updateUser";
@@ -69,17 +82,20 @@ public class UserController {
 
         HrUser editedUser = userConverter.convert(updateUserForm);
         userFacade.getUserRepository().save(editedUser);
-
         redirectAttributes.addFlashAttribute("updateUserSuccess", true);
+
         return "redirect:/user/list";
     }
 
     @GetMapping("/delete")
     public String deleteUser(@RequestParam("id") Integer id,
                                  RedirectAttributes redirectAttributes){
+        //TODO delete user_role\
+        HrUser user = userFacade.getUserRepository().findById(id).get();
+        userFacade.getUserRoleRepository().deleteByUsername(user.getUsername());
         userFacade.getUserRepository().deleteById(id);
-
         redirectAttributes.addFlashAttribute("deleteUserSuccess", true);
+
         return "redirect:/user/list";
     }
 }
