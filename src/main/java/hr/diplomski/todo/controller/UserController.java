@@ -29,6 +29,13 @@ public class UserController {
         this.userConverter = userConverter;
     }
 
+    @ModelAttribute
+    public void addUserIdAttribute(final Model model,
+                                   final Principal principal) {
+        HrUser user = userFacade.getUserRepository().findByUsername(principal.getName());
+        model.addAttribute("userId", user.getId());
+    }
+
     @GetMapping("/my-profile")
     public String getMyUserProfilePage(final Principal principal,
                                        final Model model) {

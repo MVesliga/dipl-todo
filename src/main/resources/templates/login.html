@@ -14,15 +14,15 @@
                     <label for="username" th:text="#{loginForm.korisnickoIme}">Korisničko ime</label>
                     <input type="text" class="form-control" id="username" th:field="*{username}"/>
                     <div class="invalid-message"
-                         th:if="${#fields.hasErrors('username')}"
-                         th:errors="*{username}">Ime error</div>
+                         th:if="${isError}"
+                         th:text="#{loginForm.korisnickoIme.notBlank}">Ime error</div>
                 </div>
                 <div class="form-group">
                     <label for="password" th:text="#{loginForm.lozinka}">Lozinka</label>
                     <input type="password" class="form-control" id="password" th:field="*{password}"/>
                     <div class="invalid-message"
-                         th:if="${#fields.hasErrors('password')}"
-                         th:errors="*{password}">Ime error</div>
+                         th:if="${isError}"
+                         th:text="#{loginForm.lozinka.notBlank}">Ime error</div>
                 </div>
                 <a class="btn btn-outline-info" th:text="#{label.back}" th:href="@{/}"></a>
                 <button type="submit" class="btn btn-outline-info float-right" th:text="#{label.submit}"></button>

@@ -1,13 +1,11 @@
 package hr.diplomski.todo.controller;
 
 import hr.diplomski.todo.converter.TodoItemConverter;
-import hr.diplomski.todo.domain.CustomUserDetails;
 import hr.diplomski.todo.domain.HrUser;
 import hr.diplomski.todo.domain.TodoItem;
 import hr.diplomski.todo.domain.form.TodoItemForm;
 import hr.diplomski.todo.facade.TodoItemFacade;
 import hr.diplomski.todo.facade.UserFacade;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -34,15 +32,22 @@ public class TodoController {
         this.todoItemConverter = todoItemConverter;
     }
 
+    @ModelAttribute
+    public void addUserIdAttribute(final Model model,
+                                   final Principal principal) {
+        HrUser user = userFacade.getUserRepository().findByUsername(principal.getName());
+        model.addAttribute("userId", user.getId());
+    }
+
     @GetMapping("/home")
     public String getTodoIndexPage() {
         return "todoIndex";
     }
 
-    @GetMapping("/list")
-    public String getTodoList(final Model model, final Principal principal) {
-        HrUser user = userFacade.getUserRepository().findByUsername(principal.getName());
-        List<TodoItem> todoList = todoItemFacade.getTodoItemRepository().findByUser_Id(user.getId());
+    @GetMapping("/{id}/list")
+    public String getTodoList(@PathVariable("id") String id,
+                              final Model model) {
+        List<TodoItem> todoList = todoItemFacade.getTodoItemRepository().findByUser_Id(Integer.valueOf(id));
 
         model.addAttribute("todoList", todoList);
         return "todoList";
@@ -59,9 +64,9 @@ public class TodoController {
 
     @PostMapping("/create")
     public String postCreateForm(@ModelAttribute @Valid TodoItemForm todoItemForm,
-                                BindingResult bindingResult,
-                                RedirectAttributes redirectAttributes,
-                                Principal principal) {
+                                final BindingResult bindingResult,
+                                final RedirectAttributes redirectAttributes,
+                                final Model model) {
 
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.todoItemForm", bindingResult);
@@ -70,17 +75,18 @@ public class TodoController {
             return "redirect:/todo/create";
         }
 
-        HrUser user = userFacade.getUserRepository().findByUsername(principal.getName());
+        HrUser user = userFacade.getUserRepository().findById(Integer.valueOf(model.getAttribute("userId").toString())).get();
         todoItemForm.setUser(user);
 
         todoItemFacade.create(todoItemForm);
 
         redirectAttributes.addFlashAttribute("createTodoItemSuccess", true);
-        return "redirect:/todo/list";
+        return "redirect:/todo/" + user.getId() + "/list";
     }
 
     @GetMapping("/edit")
-    public String getEditForm(@RequestParam(value = "id")Integer id, Model model){
+    public String getEditForm(@RequestParam(value = "id")Integer id,
+                              final Model model){
 
         if (!model.containsAttribute("updateTodoItemForm")) {
             TodoItem todoItem = todoItemFacade.getTodoItemRepository().findById(id).get();
@@ -95,8 +101,9 @@ public class TodoController {
 
     @PostMapping("/edit")
     public String postEditForm(@ModelAttribute @Valid TodoItemForm updateTodoItemForm,
-                               BindingResult bindingResult,
-                               RedirectAttributes redirectAttributes) {
+                               final BindingResult bindingResult,
+                               final RedirectAttributes redirectAttributes,
+                               final Model model) {
 
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.updateTodoItemForm", bindingResult);
@@ -109,15 +116,18 @@ public class TodoController {
         todoItemFacade.getTodoItemRepository().save(editedTodoItem);
 
         redirectAttributes.addFlashAttribute("updateTodoItemSuccess", true);
-        return "redirect:/todo/list";
+        String userId = model.getAttribute("userId").toString();
+        return "redirect:/todo/" + userId + "/list";
     }
 
     @GetMapping("/delete")
     public String deleteTodoItem(@RequestParam("id") Integer id,
-                                 RedirectAttributes redirectAttributes){
+                                 final RedirectAttributes redirectAttributes,
+                                 final Model model){
         todoItemFacade.getTodoItemRepository().deleteById(id);
 
         redirectAttributes.addFlashAttribute("deleteTodoItemSuccess", true);
-        return "redirect:/todo/list";
+        String userId = model.getAttribute("userId").toString();
+        return "redirect:/todo/" + userId + "/list";
     }
 }

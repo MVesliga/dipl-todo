@@ -3,6 +3,7 @@ package hr.diplomski.todo.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -27,10 +28,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
-        /*auth.inMemoryAuthentication()
-                .withUser("user").password(passwordEncoder().encode("userpass")).roles("USER")
-                .and()
-                .withUser("admin").password(passwordEncoder().encode("adminpass")).roles("ADMIN");*/
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
                 .usersByUsernameQuery("select username, password, enabled from hr_user where username=?")
@@ -51,16 +48,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/todo/**").hasAnyRole("USER", "ADMIN")
                 .antMatchers(staticResources).permitAll()
                 .antMatchers("/*").permitAll()
+                .antMatchers(HttpMethod.POST).hasAnyRole("USER", "ADMIN")
+                .antMatchers(HttpMethod.DELETE).hasAnyRole("USER", "ADMIN")
+                .antMatchers(HttpMethod.GET, "/todo/**").hasAnyRole("USER", "ADMIN")
+                .antMatchers(HttpMethod.GET, "/user/my-profile").hasAnyRole("USER", "ADMIN")
+                .antMatchers(HttpMethod.GET, "/user/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/login")
                 .defaultSuccessUrl("/todo/home", true)
-                .failureUrl("/login")
+                .failureUrl("/login?error=true")
                 .and()
                 .logout()
                 .invalidateHttpSession(true)
