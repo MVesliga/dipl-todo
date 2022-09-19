@@ -4,8 +4,10 @@ import hr.diplomski.todo.converter.TodoItemConverter;
 import hr.diplomski.todo.domain.HrUser;
 import hr.diplomski.todo.domain.TodoItem;
 import hr.diplomski.todo.domain.form.TodoItemForm;
+import hr.diplomski.todo.exception.ActionForbiddenException;
 import hr.diplomski.todo.facade.TodoItemFacade;
 import hr.diplomski.todo.facade.UserFacade;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.security.AccessControlException;
 import java.security.Principal;
 import java.util.List;
 
@@ -46,7 +49,14 @@ public class TodoController {
 
     @GetMapping("/{id}/list")
     public String getTodoList(@PathVariable("id") String id,
-                              final Model model) {
+                              final Model model,
+                              final Principal principal) {
+
+        //TODO Dio koda koji onemogucava horizontalnu eskalaciju privilegija
+        HrUser user = userFacade.getUserRepository().findByUsername(principal.getName());
+        if (!String.valueOf(user.getId()).equals(id)) {
+            throw new ActionForbiddenException("User has no permission for this!");
+        }
         List<TodoItem> todoList = todoItemFacade.getTodoItemRepository().findByUser_Id(Integer.valueOf(id));
 
         model.addAttribute("todoList", todoList);

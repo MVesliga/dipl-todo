@@ -35,6 +35,38 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(new BCryptPasswordEncoder(12));
     }
 
+    //TODO Neispravna konfiguracija za kontrolu pristupa
+    /*@Override
+    protected void configure(final HttpSecurity http) throws Exception {
+
+        String[] staticResources  =  {
+                "/css/**",
+                "/images/**",
+                "/fonts/**",
+                "/scripts/**",
+        };
+
+        http
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers(staticResources).permitAll()
+                .antMatchers("/*").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/login")
+                .loginProcessingUrl("/login")
+                .defaultSuccessUrl("/todo/home", true)
+                .failureUrl("/login?error=true")
+                .and()
+                .logout()
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID");
+
+        http.headers().frameOptions().disable();
+    }*/
+
+    //TODO Ispravna konfiguracija za kontrolu pristupa
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
 
